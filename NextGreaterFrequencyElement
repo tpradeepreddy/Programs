@@ -1,0 +1,47 @@
+/*package whatever //do not write package name here */
+
+import java.io.*;
+import java.util.*;
+class NGFE {
+    
+    void find(int a[])
+    {
+        Stack<Integer> s=new Stack<>();
+        HashMap<Integer,Integer> m=new HashMap<Integer,Integer>();
+        for(int i=0;i<a.length;i++)
+        {
+            if(m.containsKey(a[i]))
+            {
+                m.put(a[i],m.get(a[i])+1);
+            }
+            else{
+                m.put(a[i],1);
+            }
+        }
+        s.push(a[0]);
+        for(int i=1;i<a.length;i++)
+        {
+            while(m.get((s.peek()))<m.get(a[i]))
+            {
+                System.out.println(s.pop()+"---"+a[i]);
+            }
+            s.push(a[i]);
+        }
+        while(!s.empty())
+        {
+            System.out.println(s.pop()+"---"+"-1");
+        }
+    }
+    
+	public static void main (String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int a[]=new int[n];
+		for(int i=0;i<n;i++)
+		{
+		    a[i]=sc.nextInt();
+		}
+		NGFE obj=new NGFE();
+		obj.find(a);
+	}
+}
