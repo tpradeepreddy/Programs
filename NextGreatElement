@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+class NGE 
+{
+    void findNGE(int a[]){
+        int n=a.length;
+        Stack<Integer> s=new Stack<Integer>();
+        s.push(a[0]);
+        for(int i=1;i<a.length;i++){
+            int next=a[i];
+            while(!s.empty() && s.peek()<next) {
+                System.out.println(s.pop()+"---"+next);
+            }
+            s.push(next);
+            
+        }
+        while(!s.empty())
+        {
+            System.out.println(s.pop()+"---"+" "+"-1");
+        }
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int a[]=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            a[i]=sc.nextInt();
+        }
+        NGE obj=new NGE();
+        obj.findNGE(a);
+    }
+}
