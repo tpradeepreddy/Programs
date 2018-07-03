@@ -1,68 +1,101 @@
 import java.io.*;
 import java.util.*;
-class BST
+class node 
 {
-     class node 
+    node left,right;
+    int key;
+    node(int key)
     {
-        node left,right;
-        int key;
-        public node(int e)
+        left=right=null;
+        this.key=key;
+    }
+}
+class BST 
+{
+    node root;
+    BST()
+    {
+        root=null;
+    }
+    node insert(node n,int key)
+    {
+        if(n==null)
         {
-           key=e; 
-           left=right=null;
+            n=new node(key);
+            return n;
+        }
+        else if(key <= n.key ){
+            n.left=insert(n.left,key);
+        }
+        else
+        {
+            n.right=insert(n.right,key);
+        }
+        return n;
+    }
+    void inorder(node n)
+    {
+        if(n!=null)
+        {
+            inorder(n.left);
+            System.out.println(n.key);
+            inorder(n.right);
         }
     }
-    node root=null;
-    void init(int key)
+    int findIS(node n)
     {
-        root=new node(key);
-        
-        
-    }
-    node insert(node root,int key)
-    {
-        if(root==null)
-        {
-            root=new node(key);
-            return root;
+        int min=n.right.key;
+        n=n.right;
+        while(n!=null)
+        {   
+            min=n.key;
+            n=n.left;
         }
-        else if (key> root.key)
-        root.right=insert(root.right,key);
-        else 
-        root.left=insert(root.left,key);
-        
-        return root;
+        return min;
         
     }
-    void inorder(node root)
-    {
-        if(root!=null)
+        node delete(node n,int key)
         {
-            inorder(root.left);
-            System.out.println(root.key);
-            inorder(root.right);
+            if(key<n.key)
+            {
+                n.left=delete(n.left,key);
+            }
+            else if(key >n.key)
+            {
+                n.right=delete(n.right,key);
+            }
+            else
+            {
+                if(n.left==null)
+                return n.right;
+                else if(n.right==null)
+                return n.left;
+                else{
+                    int temp=findIS(n);
+                    n.key=temp;
+                    n.right=delete(n.right,n.key);
+                }
+            }
+            return n;
+            
         }
-    }
-    
-    
     public static void main(String args[])
     {
         Scanner sc=new Scanner(System.in);
         int n=sc.nextInt();
-        BST obj=new BST();
+        BST t=new BST();
         for(int i=0;i<n;i++)
         {
-            int temp=sc.nextInt();
-            if(obj.root==null)
-            {
-            obj.init(temp);
-            System.out.println("root is "+obj.root.key);
-            }
-            else
-            obj.insert(obj.root,temp);
+            int e=sc.nextInt();
+            t.root=t.insert(t.root,e);
         }
-        System.out.println(obj.root.key);
-        obj.inorder(obj.root);
+        t.inorder(t.root);
+        t.delete(t.root,20);
+        t.inorder(t.root);
+        
+        
+        
+        
     }
     
 }
