@@ -1,0 +1,72 @@
+import java.io.*;
+import java.util.*;
+class Node 
+{
+    Node left,right;
+    int key;
+    Node(int key)
+    {
+        this.key=key;
+    }
+}
+class BST
+{
+    Node root;
+    BST()
+    {
+        root=null;
+    }
+    int nextBig(int a[],int start,int end)
+    {
+        for(int i=start+1;i<=end;i++)
+        {
+            if(a[i] > a[start])
+            {
+                return i;
+            }
+        }
+ 
+        return end+1;
+    }
+    Node construct(int a[],int start,int end)
+    {
+        if(start==end)
+        {
+            Node n=new Node(a[start]);
+            return n;
+        }
+        else if(start < end)
+        {
+            Node n=new Node(a[start]);
+            int next=nextBig(a,start,end);
+            n.left=construct(a,start+1,next-1);
+            n.right=construct(a,next,end);
+            return n;
+        }
+
+            return null;
+        
+    }
+    void inorder(Node n)
+    {
+        if(n!=null)
+        {
+            inorder(n.left);
+            System.out.println(n.key);
+            inorder(n.right);
+        }
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int a[]=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            a[i]=sc.nextInt();
+        }
+        BST obj=new BST();
+        obj.root=obj.construct(a,0,n-1);
+        obj.inorder(obj.root);
+    }
+}
